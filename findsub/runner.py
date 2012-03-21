@@ -12,6 +12,16 @@ from utils import get_file_hash
 OPENSUBTITLES_API_URL = 'http://api.opensubtitles.org/xml-rpc'
 BAD_SUBTITLE = '1'
 
+
+class FileFinder(object):
+
+    def __init__(self, path_matcher):
+        self.path_matcher = path_matcher
+
+    def all_files(self):
+        pass
+
+
 class OpenSubtitlesClient(object):
     def __init__(self, username, password):
         self.opensubtitles = ServerProxy(OPENSUBTITLES_API_URL)
