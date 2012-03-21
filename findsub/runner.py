@@ -3,7 +3,7 @@
 
 import getpass
 import argparse
-from pythonopensubtitles.opensubtitles import OpenSubtitles
+import logging as log
 
 BAD_SUBTITLE = '1'
 
@@ -29,9 +29,9 @@ def unzip_to(gzip_file, target_file, dest_file_path, replace=False):
 
 def main():
     parser = argparse.ArgumentParser(description='Find the best subtitle from http://opensubtitles.org/ for you movies/series files.')
-    parser.add_argument('file_matcher', metavar='M', type=str, nargs=1, required=True,
+    parser.add_argument('file_matcher', metavar='FILE', type=str, nargs=1,
                         help='a file path or matcher indication where you files are located (ex: *.avi for all AVI files in current directory)')
-    parser.add_argument('-u', dest='username', action='store', type=str, nargs=1, required=True,
+    parser.add_argument('-u', dest='username', action='store', type=str, nargs=1,
                         help='indicate your username in opensubtitles site')
     parser.add_argument('-l', dest='language', action='store', type=str, nargs=1, default='all',
                         help='find subtitles for a specific language')

@@ -1,0 +1,15 @@
+usage: runner.py [-h] [-u USERNAME] [-l LANGUAGE] [--replace] FILE
+
+Find the best subtitle from http://opensubtitles.org/ for you movies/series
+files.
+
+positional arguments:
+  FILE         a file path or matcher indication where you files are located
+               (ex: *.avi for all AVI files in current directory)
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -u USERNAME  indicate your username in opensubtitles site
+  -l LANGUAGE  find subtitles for a specific language
+  --replace    replace any subtitles with the same filename (default: not
+               replace any subtitle file)
