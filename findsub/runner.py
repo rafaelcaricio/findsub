@@ -1,17 +1,35 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+import sys
 import getpass
 import argparse
 import logging as log
+from xmlrpclib import ServerProxy
 
+from utils import get_file_hash
+
+OPENSUBTITLES_API_URL = 'http://api.opensubtitles.org/xml-rpc'
 BAD_SUBTITLE = '1'
 
 class OpenSubtitlesClient(object):
     def __init__(self, username, password):
+        self.opensubtitles = ServerProxy(OPENSUBTITLES_API_URL)
+        response = self.opensubtitles.LogIn(username, password, 'en', 'OS Test User Agent') #'FindSub v1')
+        if self.check_response(response):
+            self.token = response['key']
+            log.info('login success...')
+        else:
+            log.error('Bad login. Please check your username/password and try again [%s]' % response['status'])
+            sys.exit(1)
+
+    def check_response(self, response):
+        return response['status'] == '200 OK'
+
+    def search(self, language, file_hash):
         pass
 
-    def find_subtitles(self, movie_files):
+    def find_subtitles(self, language, movie_files):
         pass
 
 
@@ -42,7 +60,7 @@ def main():
     
     ost = OpenSubtitlesClient(args.username, getpass.getpass())
     movie_files = FileFinder(args.file_matcher)
-    for movie_file, subtitles in ost.find_subtitles(movie_files.all_files()):
+    for movie_file, subtitles in ost.find_subtitles(args.language, movie_files.all_files()):
         i = 0
         if subtitles:
             found_a_good_subtitle = False
